@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.intentfilter:android-wificonnect:0.1.2@aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/2ae02c2b99c7084ebfcc35c811a89f9d/transformed/jetified-android-wificonnect-0.1.2/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/2ae02c2b99c7084ebfcc35c811a89f9d/transformed/jetified-android-wificonnect-0.1.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/2ae02c2b99c7084ebfcc35c811a89f9d/transformed/jetified-android-wificonnect-0.1.2/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.intentfilter/android-wificonnect/0.1.2/5f15f3f1f01a9a5270b95ff2a61290ffc0c793cf/android-wificonnect-0.1.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.intentfilter/android-wificonnect/0.1.2/32ec444cdaa7244fe10fa4881e0630f8f33f85d0/android-wificonnect-0.1.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
