@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.affise:module-network:1.5.4@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/535fbf6b24c99cf1a6fbad798aeded3c/transformed/jetified-module-network-1.5.4/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/535fbf6b24c99cf1a6fbad798aeded3c/transformed/jetified-module-network-1.5.4/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.affise/module-network/1.5.4/a2ec88cb61ac0bbe233126267ecb120f57bb7232/module-network-1.5.4-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.affise/module-network/1.5.4/34dcfc91646aff7a4b2229bb5ace1b3fcac2b43d/module-network-1.5.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
