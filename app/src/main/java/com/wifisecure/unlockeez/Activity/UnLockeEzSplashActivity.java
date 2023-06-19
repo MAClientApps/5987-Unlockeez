@@ -14,7 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.affise.attribution.Affise;
-import com.affise.attribution.referrer.OnReferrerCallback;
+import com.affise.attribution.events.predefined.CustomId01Event;
 import com.affise.attribution.referrer.ReferrerKey;
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.android.gms.common.ConnectionResult;
@@ -25,7 +25,6 @@ import com.wifisecure.unlockeez.R;
 import com.wifisecure.unlockeez.UnLockeEzMainPageActivity;
 import com.wifisecure.unlockeez.Utils;
 
-import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -47,6 +46,8 @@ public class UnLockeEzSplashActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_un_locke_ez);
+
+        
         // Intent is used to switch from one activity to another.
 
   /*      try {
@@ -61,7 +62,7 @@ public class UnLockeEzSplashActivity extends AppCompatActivity {
             e.printStackTrace();
         }*/
 
-        try {
+      /*  try {
             Affise.getReferrerValue(ReferrerKey.AD_ID, new OnReferrerCallback() {
                 @Override
                 public void handleReferrer(@Nullable String s) {
@@ -71,9 +72,9 @@ public class UnLockeEzSplashActivity extends AppCompatActivity {
             });
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
-        try {
+     /*   try {
             Affise.getReferrerValue(ReferrerKey.AFFISE_AD_ID, new OnReferrerCallback() {
                 @Override
                 public void handleReferrer(@Nullable String s) {
@@ -84,7 +85,36 @@ public class UnLockeEzSplashActivity extends AppCompatActivity {
 
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
+
+/*        Affise.getReferrerValue(ReferrerKey.AFFISE_DEEPLINK, s -> {
+            Log.e("App", "AFFISE_DEEPLINK: " + s);
+            Log.e("App", "received AFFISE_DEEPLINK: " + System.currentTimeMillis());
+            //Utils.setReceivedAttribution(getApplicationContext(), s);
+            Affise.sendEvent(new CustomId01Event("CustomEvent", System.currentTimeMillis(), "AFFISE_DEEPLINK"));
+           // Utils.setCampaign(UnLockeEzSplashActivity.this, s);
+        });
+
+        Affise.getReferrerValue(ReferrerKey.AFFC, value -> {
+            Log.e("App", "AFFC: " + value);
+            Log.e("App", "received AFFC: " + System.currentTimeMillis());
+        });
+
+        Affise.getReferrerValue(ReferrerKey.CAMPAIGN_ID, s -> {
+            Log.e("App", "CAMPAIGN_ID: " + s);
+            Log.e("App", "received CAMPAIGN_ID: " + System.currentTimeMillis());
+            //Utils.setReceivedAttribution(getApplicationContext(), s);
+            Affise.sendEvent(new CustomId01Event("CustomEvent", System.currentTimeMillis(), "CAMPAIGN_ID"));
+          //  Utils.setCampaign(mContext, s);
+        });
+        Affise.getReferrerValue(ReferrerKey.CLICK_ID, s -> {
+            Log.e("App", "CLICK_ID: " + s);
+            Log.e("App", "received CLICK_ID: " + System.currentTimeMillis());
+            Affise.sendEvent(new CustomId01Event("CustomEvent", System.currentTimeMillis(), "CLICK_ID"));
+           // Utils.setClickID(mContext, s);
+        });*/
+
+
         retrieveGPSID();
 
         initView();
@@ -199,7 +229,7 @@ public class UnLockeEzSplashActivity extends AppCompatActivity {
                         }
                         gotoNext();
                     } else if (SPLASH_TIME >= REF_TIMER) {
-                       // if (!Utils.getReceivedAttribution(UnLockeEzSplashActivity.this).isEmpty()) {
+                        if (!Utils.getReceivedAttribution(UnLockeEzSplashActivity.this).isEmpty()) {
 
                             if (!Utils.getCampaign(UnLockeEzSplashActivity.this).isEmpty()) {
                                 try {
@@ -218,14 +248,14 @@ public class UnLockeEzSplashActivity extends AppCompatActivity {
                                 }
                                 gotoHome();
                             }
-                     /*   } else if (SPLASH_TIME >= APP_TIMER) {
+                        } else if (SPLASH_TIME >= APP_TIMER) {
                             try {
                                 mScheduledExecutorService.shutdown();
                             } catch (Exception InternalFlow_exception) {
                                 InternalFlow_exception.printStackTrace();
                             }
                             gotoHome();
-                        }*/
+                        }
                     }
 
                 }, 0, 500, TimeUnit.MILLISECONDS);
