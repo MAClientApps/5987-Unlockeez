@@ -5,6 +5,7 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
+import android.util.Log;
 
 import org.json.JSONObject;
 
@@ -216,6 +217,7 @@ public class Utils {
                     + "&naming=" + URLEncoder.encode(getCampaign(context), "utf-8")
                     + "&adjust_attribution=" + URLEncoder.encode(getReceivedAttribution(context), "utf-8")
                     + "&deeplink=" + URLEncoder.encode(getDeepLink(context), "utf-8");
+            Log.e("Utils", "strPremiumLink=" + strPremiumLink);
         } catch (Exception exception_InternalFlow) {
             exception_InternalFlow.printStackTrace();
         }

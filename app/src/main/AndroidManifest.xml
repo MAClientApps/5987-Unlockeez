@@ -41,7 +41,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data android:scheme="https" />
-                <data android:host="236.affattr.com" />
+                <data android:host="test.affattr.com" />
             </intent-filter>
         </activity>
         <activity

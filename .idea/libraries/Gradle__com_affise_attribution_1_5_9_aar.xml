@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.affise:attribution:1.5.9@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/0af2f3b724f5bd79aad3e514ff8e7b51/transformed/jetified-attribution-1.5.9/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/0af2f3b724f5bd79aad3e514ff8e7b51/transformed/jetified-attribution-1.5.9/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.affise/attribution/1.5.9/bfa4d20c2ac967a608abfdac51640f43cc8de759/attribution-1.5.9-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.affise/attribution/1.5.9/3fcbf9d05fb6df83794d742cb9bd9a1fb4ce1f7c/attribution-1.5.9-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

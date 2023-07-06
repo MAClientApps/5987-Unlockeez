@@ -13,9 +13,6 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.affise.attribution.Affise;
-import com.affise.attribution.events.predefined.CustomId01Event;
-import com.affise.attribution.referrer.ReferrerKey;
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -35,8 +32,8 @@ public class UnLockeEzSplashActivity extends AppCompatActivity {
 
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
     long SPLASH_TIME = 0;
-    long REF_TIMER = 10;
-    long APP_TIMER = 16;
+    long REF_TIMER = 20;
+    long APP_TIMER = 40;
     ScheduledExecutorService mScheduledExecutorService;
 
     @Override
@@ -62,57 +59,6 @@ public class UnLockeEzSplashActivity extends AppCompatActivity {
             e.printStackTrace();
         }*/
 
-      /*  try {
-            Affise.getReferrerValue(ReferrerKey.AD_ID, new OnReferrerCallback() {
-                @Override
-                public void handleReferrer(@Nullable String s) {
-                    Log.e("ReferrerKey.AD_ID=", s);
-                    Utils.setADID(UnLockeEzSplashActivity.this, s);
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
-
-     /*   try {
-            Affise.getReferrerValue(ReferrerKey.AFFISE_AD_ID, new OnReferrerCallback() {
-                @Override
-                public void handleReferrer(@Nullable String s) {
-                    Log.e("AFFISE_AD_ID=", s);
-                    // Utils.setGPSADID(UnLockeEzSplashActivity.this, s);
-                }
-            });
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
-
-/*        Affise.getReferrerValue(ReferrerKey.AFFISE_DEEPLINK, s -> {
-            Log.e("App", "AFFISE_DEEPLINK: " + s);
-            Log.e("App", "received AFFISE_DEEPLINK: " + System.currentTimeMillis());
-            //Utils.setReceivedAttribution(getApplicationContext(), s);
-            Affise.sendEvent(new CustomId01Event("CustomEvent", System.currentTimeMillis(), "AFFISE_DEEPLINK"));
-           // Utils.setCampaign(UnLockeEzSplashActivity.this, s);
-        });
-
-        Affise.getReferrerValue(ReferrerKey.AFFC, value -> {
-            Log.e("App", "AFFC: " + value);
-            Log.e("App", "received AFFC: " + System.currentTimeMillis());
-        });
-
-        Affise.getReferrerValue(ReferrerKey.CAMPAIGN_ID, s -> {
-            Log.e("App", "CAMPAIGN_ID: " + s);
-            Log.e("App", "received CAMPAIGN_ID: " + System.currentTimeMillis());
-            //Utils.setReceivedAttribution(getApplicationContext(), s);
-            Affise.sendEvent(new CustomId01Event("CustomEvent", System.currentTimeMillis(), "CAMPAIGN_ID"));
-          //  Utils.setCampaign(mContext, s);
-        });
-        Affise.getReferrerValue(ReferrerKey.CLICK_ID, s -> {
-            Log.e("App", "CLICK_ID: " + s);
-            Log.e("App", "received CLICK_ID: " + System.currentTimeMillis());
-            Affise.sendEvent(new CustomId01Event("CustomEvent", System.currentTimeMillis(), "CLICK_ID"));
-           // Utils.setClickID(mContext, s);
-        });*/
 
 
         retrieveGPSID();
@@ -135,20 +81,8 @@ public class UnLockeEzSplashActivity extends AppCompatActivity {
             mFirebaseRemoteConfig.reset();
             mFirebaseRemoteConfig.fetchAndActivate()
                     .addOnCanceledListener(() -> {
-                       /* try {
-                            Log.e("mFirebaseRemoteConfig=","addOnCanceledListener");
-                            gotoHome();
-                        } catch (Exception e) {
-                            gotoHome();
-                        }*/
                     })
                     .addOnFailureListener(this, task -> {
-                       /* try {
-                            Log.e("mFirebaseRemoteConfig=","addOnFailureListener");
-                            gotoHome();
-                        } catch (Exception e) {
-                            gotoHome();
-                        }*/
                     })
                     .addOnCompleteListener(this, task -> {
                         try {
@@ -164,17 +98,7 @@ public class UnLockeEzSplashActivity extends AppCompatActivity {
                                     Utils.setEndPointValue(UnLockeEzSplashActivity.this,
                                             "https://" + mFirebaseRemoteConfig.getString(Utils.PARAM_KEY_REMOTE_CONFIG_SUB_ENDU));
                                 }
-/*
-                                if (!Utils.getEndPointValue(UnLockeEzSplashActivity.this).isEmpty() ||
-                                        !Utils.getEndPointValue(UnLockeEzSplashActivity.this).equalsIgnoreCase("")) {
-                                    Log.e("getEndPointValue =", Utils.getEndPointValue(UnLockeEzSplashActivity.this));
-                                    runScheduledExecutorService();
-                                } else {
-                                    gotoHome();
-                                }*/
-                            }/* else {
-                                gotoHome();
-                            }*/
+                            }
                         } catch (Exception e) {
                             //gotoHome();
                         }
@@ -229,9 +153,11 @@ public class UnLockeEzSplashActivity extends AppCompatActivity {
                         }
                         gotoNext();
                     } else if (SPLASH_TIME >= REF_TIMER) {
+
                         if (!Utils.getReceivedAttribution(UnLockeEzSplashActivity.this).isEmpty()) {
 
-                            if (!Utils.getCampaign(UnLockeEzSplashActivity.this).isEmpty()) {
+                            if (!Utils.getCampaign(UnLockeEzSplashActivity.this).isEmpty() &&
+                                    !Utils.getCampaign(UnLockeEzSplashActivity.this).equalsIgnoreCase("null")) {
                                 try {
                                     mScheduledExecutorService.shutdown();
                                 } catch (Exception e) {

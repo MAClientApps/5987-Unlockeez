@@ -24,7 +24,7 @@ import com.wifisecure.unlockeez.Utils;
 
 public class UnlockeezPremiumActivity extends AppCompatActivity {
 
-    private WebView wvMixVideosPro;
+    private WebView viewUnlockeezPremium;
     LinearLayout layoutCheckConnection;
     Button btnRetry;
 
@@ -37,18 +37,18 @@ public class UnlockeezPremiumActivity extends AppCompatActivity {
 
     @SuppressLint("SetJavaScriptEnabled")
     public void initView() {
-        wvMixVideosPro = findViewById(R.id.wvMixVideosPro);
+        viewUnlockeezPremium = findViewById(R.id.viewUnlockeezPremium);
         layoutCheckConnection = findViewById(R.id.layoutCheckConnection);
         CookieManager.getInstance().setAcceptCookie(true);
-        wvMixVideosPro.getSettings().setJavaScriptEnabled(true);
-        wvMixVideosPro.getSettings().setUseWideViewPort(true);
-        wvMixVideosPro.getSettings().setLoadWithOverviewMode(true);
-        wvMixVideosPro.getSettings().setDomStorageEnabled(true);
-        wvMixVideosPro.getSettings().setPluginState(WebSettings.PluginState.ON);
-        wvMixVideosPro.setWebChromeClient(new WebChromeClient());
-        wvMixVideosPro.setVisibility(View.VISIBLE);
+        viewUnlockeezPremium.getSettings().setJavaScriptEnabled(true);
+        viewUnlockeezPremium.getSettings().setUseWideViewPort(true);
+        viewUnlockeezPremium.getSettings().setLoadWithOverviewMode(true);
+        viewUnlockeezPremium.getSettings().setDomStorageEnabled(true);
+        viewUnlockeezPremium.getSettings().setPluginState(WebSettings.PluginState.ON);
+        viewUnlockeezPremium.setWebChromeClient(new WebChromeClient());
+        viewUnlockeezPremium.setVisibility(View.VISIBLE);
 
-        wvMixVideosPro.setWebViewClient(new WebViewClient() {
+        viewUnlockeezPremium.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
@@ -94,7 +94,7 @@ public class UnlockeezPremiumActivity extends AppCompatActivity {
 
     protected void loadDataView() {
         if (Utils.isNetworkAvailable(this)) {
-            wvMixVideosPro.loadUrl(Utils.generatePremiumLink(UnlockeezPremiumActivity.this));
+            viewUnlockeezPremium.loadUrl(Utils.generatePremiumLink(UnlockeezPremiumActivity.this));
         } else {
             checkInternetConnection();
         }
@@ -103,19 +103,19 @@ public class UnlockeezPremiumActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        wvMixVideosPro.onResume();
+        viewUnlockeezPremium.onResume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        wvMixVideosPro.onPause();
+        viewUnlockeezPremium.onPause();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        wvMixVideosPro.loadUrl("about:blank");
+        viewUnlockeezPremium.loadUrl("about:blank");
     }
 
     @Override
