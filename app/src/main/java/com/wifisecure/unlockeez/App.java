@@ -119,35 +119,26 @@ public class App extends Application {
 
         Affise.getReferrerValue(ReferrerKey.AFFISE_AD_ID, value -> {
             Log.e("App", "AFFISE_AD_ID: " + value);
-            // Log.e("App", "received AFFC: " + System.currentTimeMillis());
         });
 
         Affise.getReferrerValue(ReferrerKey.AFFC, value -> {
             Log.e("App", "AFFC: " + value);
-            // Log.e("App", "received AFFC: " + System.currentTimeMillis());
         });
 
         Affise.getReferrerValue(ReferrerKey.AFFISE_AFFC_ID, value -> {
             Log.e("App", "AFFISE_AFFC_ID: " + value);
-            Utils.setCampaign(mContext, value);
-            // Log.e("App", "received AFFC: " + System.currentTimeMillis());
         });
 
         Affise.getReferrerValue(ReferrerKey.AD_ID, s -> {
             Log.e("App", "AD_ID: " + s);
-            // Log.e("App", "received CAMPAIGN_ID: " + System.currentTimeMillis());
         });
 
         Affise.getReferrerValue(ReferrerKey.CAMPAIGN_ID, s -> {
             Log.e("App", "CAMPAIGN_ID: " + s);
-            // Log.e("App", "received CAMPAIGN_ID: " + System.currentTimeMillis());
         });
 
         Affise.getReferrerValue(ReferrerKey.CLICK_ID, s -> {
             Log.e("App", "CLICK_ID: " + s);
-            // Log.e("App", "received CLICK_ID: " + System.currentTimeMillis());
-            // Affise.sendEvent(new CustomId01Event("CustomEvent", System.currentTimeMillis(), "CLICK_ID"));
-            Utils.setClickID(mContext, s);
         });
 
 

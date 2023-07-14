@@ -103,11 +103,11 @@
     <orderEntry type="library" name="Gradle: com.google.maps.android:android-maps-utils:2.3.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-location:16.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-places-placereport:16.0.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.affise:attribution:1.5.9@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.affise:module-advertising:1.5.9@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.affise:module-network:1.5.9@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.affise:module-phone:1.5.9@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.affise:module-status:1.5.9@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.affise:attribution:1.6.2@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.affise:module-advertising:1.6.2@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.affise:module-network:1.6.2@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.affise:module-phone:1.6.2@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.affise:module-status:1.6.2@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.installreferrer:installreferrer:2.2@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-analytics:21.2.2@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-measurement:21.2.2@aar" level="project" />
