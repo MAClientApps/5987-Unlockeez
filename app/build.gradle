@@ -45,14 +45,19 @@ dependencies {
     implementation 'com.google.maps.android:android-maps-utils:2.3.0'
     implementation 'com.google.android.gms:play-services-location:16.0.0'
 
-    implementation 'com.affise:attribution:1.6.2'
+    implementation 'com.applovin:applovin-sdk:+'
+    implementation 'com.applovin.mediation:unityads-adapter:+'
+
+    implementation 'com.affise:attribution:1.6.4'
     // Add Affise modules
-    implementation 'com.affise:module-advertising:1.6.2'
-    implementation 'com.affise:module-network:1.6.2'
-    implementation 'com.affise:module-phone:1.6.2'
-    implementation 'com.affise:module-status:1.6.2'
+    implementation 'com.affise:module-advertising:1.6.4'
+    implementation 'com.affise:module-network:1.6.4'
+    implementation 'com.affise:module-phone:1.6.4'
+    implementation 'com.affise:module-status:1.6.4'
     // Add install referrer
     implementation 'com.android.installreferrer:installreferrer:2.2'
+    implementation 'com.google.android.gms:play-services-analytics-impl:18.0.3'
+    implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
 
     implementation platform('com.google.firebase:firebase-bom:32.0.0')
     implementation 'com.google.firebase:firebase-analytics'

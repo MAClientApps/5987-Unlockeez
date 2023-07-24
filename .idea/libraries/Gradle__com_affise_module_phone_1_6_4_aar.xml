@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.affise:module-phone:1.6.4@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/3bf180894c18834b1f45682409b75603/transformed/jetified-module-phone-1.6.4/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/3bf180894c18834b1f45682409b75603/transformed/jetified-module-phone-1.6.4/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.affise/module-phone/1.6.4/35569a9b7d3ca2d8ab2243e7a3b15ee60b9e668e/module-phone-1.6.4-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.affise/module-phone/1.6.4/6f1a97eefc51f79240d15ebec8a4d53df903a0a9/module-phone-1.6.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

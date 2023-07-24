@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.affise:module-advertising:1.6.4@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/db9b76586238152ebc814ad238136ee5/transformed/jetified-module-advertising-1.6.4/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/db9b76586238152ebc814ad238136ee5/transformed/jetified-module-advertising-1.6.4/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.affise/module-advertising/1.6.4/c88f4886a5b215b0079669069c82fbe8eeb4e76f/module-advertising-1.6.4-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.affise/module-advertising/1.6.4/6cb35c034c95eb1ec61f8822e7bfa0dd3f8af8c9/module-advertising-1.6.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

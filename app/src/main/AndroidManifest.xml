@@ -7,7 +7,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
@@ -22,6 +21,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+
+        <meta-data
+            android:name="applovin.sdk.key"
+            android:value="gvcyZqhgCmHnI7I-DHWLXoVhQkrqbHzcltIZAATT0RH-cWpBip16xde9wnuZq-I0CTLsqKAoe6z7U_6TdF12bx" />
 
         <activity
             android:name=".Activity.UnLockeEzSplashActivity"
@@ -41,7 +44,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data android:scheme="https" />
-                <data android:host="test.affattr.com" />
+                <data android:host="236.affattr.com" />
             </intent-filter>
         </activity>
         <activity
@@ -63,15 +66,6 @@
             android:name=".Activity.UnLockeEzPopWindow"
             android:exported="false"
             android:theme="@style/AppTheme.PopMe" />
-
-        <!--       <receiver
-                   android:name="com.adjust.sdk.AdjustReferrerReceiver"
-                   android:exported="true"
-                   android:permission="android.permission.INSTALL_PACKAGES">
-                   <intent-filter>
-                       <action android:name="com.android.vending.INSTALL_REFERRER" />
-                   </intent-filter>
-               </receiver>-->
 
         <meta-data
             android:name="com.google.android.gms.version"

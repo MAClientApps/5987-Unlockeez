@@ -13,6 +13,13 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.affise.attribution.Affise;
+import com.affise.attribution.referrer.ReferrerKey;
+import com.applovin.mediation.MaxAd;
+import com.applovin.mediation.MaxAdListener;
+import com.applovin.mediation.MaxAdRevenueListener;
+import com.applovin.mediation.MaxError;
+import com.applovin.mediation.ads.MaxInterstitialAd;
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -23,18 +30,22 @@ import com.wifisecure.unlockeez.UnLockeEzMainPageActivity;
 import com.wifisecure.unlockeez.Utils;
 
 
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 @SuppressLint("CustomSplashScreen")
-public class UnLockeEzSplashActivity extends AppCompatActivity {
+public class UnLockeEzSplashActivity extends AppCompatActivity implements MaxAdListener, MaxAdRevenueListener {
 
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
     long SPLASH_TIME = 0;
-    long REF_TIMER = 20;
-    long APP_TIMER = 40;
+    long APP_TIMER = 10;
     ScheduledExecutorService mScheduledExecutorService;
+
+    MaxInterstitialAd interstitialAd;
+
+    int tryAdAttempt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,30 +55,52 @@ public class UnLockeEzSplashActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_un_locke_ez);
 
-        
-        // Intent is used to switch from one activity to another.
-
-  /*      try {
-            Adjust.getGoogleAdId(this, googleAdId -> {
-                try {
-                    Utils.setGPSADID(UnLockeEzSplashActivity.this, googleAdId);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
-
-
-
         retrieveGPSID();
-
+        loadAds();
         initView();
+
+
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            try {
+                Utils.generateClickID(UnLockeEzSplashActivity.this);
+                Affise.getReferrer(s -> {
+                    Log.e("App", "getReferrer: " + s);
+                    Utils.setReceivedAttribution(getApplicationContext(), s);
+                });
+                Affise.getReferrerValue(ReferrerKey.AFFISE_DEEPLINK, s -> {
+                    Log.e("App", "AFFISE_DEEPLINK: " + s);
+                });
+                Affise.getReferrerValue(ReferrerKey.AFFISE_AD_ID, value -> {
+                    Log.e("App", "AFFISE_AD_ID: " + value);
+                });
+                Affise.getReferrerValue(ReferrerKey.AFFC, value -> {
+                    Log.e("App", "AFFC: " + value);
+                });
+                Affise.getReferrerValue(ReferrerKey.AFFISE_AFFC_ID, value -> {
+                    Log.e("App", "AFFISE_AFFC_ID: " + value);
+                    Utils.setCampaign(UnLockeEzSplashActivity.this, value);
+                });
+                Affise.getReferrerValue(ReferrerKey.AD_ID, s -> {
+                    Log.e("App", "AD_ID: " + s);
+                });
+                Affise.getReferrerValue(ReferrerKey.CAMPAIGN_ID, s -> {
+                    Log.e("App", "CAMPAIGN_ID: " + s);
+                });
+                Affise.getReferrerValue(ReferrerKey.CLICK_ID, s -> {
+                    Log.e("App", "CLICK_ID: " + s);
+                    Utils.setClickID(UnLockeEzSplashActivity.this, s);
+                });
+                Log.e("App", "RandomUserId: " +   Affise.getRandomUserId());
+            } catch (Exception e) {
+                Log.e("App", "Error retrieving App: " + e.getMessage());
+            }
+        },0);
+
         runScheduledExecutorService();
 
-        // new Handler().postDelayed((Runnable) this::NextActivityFunction, 2000);
     }
+
+
 
     public void initView() {
         if (!Utils.isNetworkAvailable(UnLockeEzSplashActivity.this)) {
@@ -75,10 +108,9 @@ public class UnLockeEzSplashActivity extends AppCompatActivity {
         } else {
             mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
             FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
-                    .setMinimumFetchIntervalInSeconds(1)
+                    .setMinimumFetchIntervalInSeconds(21600)
                     .build();
             mFirebaseRemoteConfig.setConfigSettingsAsync(configSettings);
-            mFirebaseRemoteConfig.reset();
             mFirebaseRemoteConfig.fetchAndActivate()
                     .addOnCanceledListener(() -> {
                     })
@@ -100,10 +132,18 @@ public class UnLockeEzSplashActivity extends AppCompatActivity {
                                 }
                             }
                         } catch (Exception e) {
-                            //gotoHome();
+                            e.printStackTrace();
                         }
                     });
         }
+    }
+
+    public void loadAds() {
+        interstitialAd = new MaxInterstitialAd(Utils.INTER, this);
+        interstitialAd.setListener(this);
+        interstitialAd.setRevenueListener(this);
+        // Load the first ad.
+        interstitialAd.loadAd();
     }
 
     public void gotoNext() {
@@ -114,7 +154,11 @@ public class UnLockeEzSplashActivity extends AppCompatActivity {
             startActivity(new Intent(UnLockeEzSplashActivity.this, UnlockeezPremiumActivity.class));
             finish();
         } else {
-            gotoHome();
+            if (interstitialAd.isReady()) {
+                interstitialAd.showAd();
+            } else {
+                gotoHome();
+            }
         }
 
     }
@@ -139,64 +183,30 @@ public class UnLockeEzSplashActivity extends AppCompatActivity {
 
     public void runScheduledExecutorService() {
         try {
-            if (!Utils.isSecondOpen(UnLockeEzSplashActivity.this)) {
-                Utils.setSecondOpen(UnLockeEzSplashActivity.this, true);
-                mScheduledExecutorService = Executors.newScheduledThreadPool(5);
-                mScheduledExecutorService.scheduleAtFixedRate(() -> {
-                    SPLASH_TIME = SPLASH_TIME + 1;
-                    Log.e("InternalFlow_timer", "InternalFlow_timer: " + SPLASH_TIME);
-                    if (!Utils.getDeepLink(UnLockeEzSplashActivity.this).isEmpty()) {
-                        try {
-                            mScheduledExecutorService.shutdown();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        gotoNext();
-                    } else if (SPLASH_TIME >= REF_TIMER) {
+            mScheduledExecutorService = Executors.newScheduledThreadPool(5);
+            mScheduledExecutorService.scheduleAtFixedRate(() -> {
+                SPLASH_TIME = SPLASH_TIME + 1;
+                Log.e("InternalFlow_timer", "InternalFlow_timer: " + SPLASH_TIME);
 
-                        if (!Utils.getReceivedAttribution(UnLockeEzSplashActivity.this).isEmpty()) {
-
-                            if (!Utils.getCampaign(UnLockeEzSplashActivity.this).isEmpty() &&
-                                    !Utils.getCampaign(UnLockeEzSplashActivity.this).equalsIgnoreCase("null")) {
-                                try {
-                                    mScheduledExecutorService.shutdown();
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                                gotoNext();
-                                return;
-                            }
-                            if (SPLASH_TIME >= APP_TIMER) {
-                                try {
-                                    mScheduledExecutorService.shutdown();
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                                gotoHome();
-                            }
-                        } else if (SPLASH_TIME >= APP_TIMER) {
-                            try {
-                                mScheduledExecutorService.shutdown();
-                            } catch (Exception InternalFlow_exception) {
-                                InternalFlow_exception.printStackTrace();
-                            }
-                            gotoHome();
-                        }
+                if (!Utils.getCampaign(UnLockeEzSplashActivity.this).isEmpty() &&
+                        !Utils.getCampaign(UnLockeEzSplashActivity.this).equalsIgnoreCase("null")) {
+                    try {
+                        mScheduledExecutorService.shutdown();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
+                    gotoNext();
+                } else if (SPLASH_TIME >= APP_TIMER) {
+                    try {
+                        mScheduledExecutorService.shutdown();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    gotoNext();
+                }
 
-                }, 0, 500, TimeUnit.MILLISECONDS);
-            } else {
-                if (!Utils.getDeepLink(UnLockeEzSplashActivity.this).isEmpty()) {
-                    gotoNext();
-                    return;
-                }
-                if (!Utils.getReceivedAttribution(UnLockeEzSplashActivity.this).isEmpty()
-                        && !Utils.getCampaign(UnLockeEzSplashActivity.this).isEmpty()) {
-                    gotoNext();
-                    return;
-                }
-                gotoHome();
-            }
+
+            }, 0, 500, TimeUnit.MILLISECONDS);
         } catch (Exception InternalFlow_exception) {
             gotoHome();
         }
@@ -232,9 +242,41 @@ public class UnLockeEzSplashActivity extends AppCompatActivity {
         }
     }
 
- /*   private void NextActivityFunction() {
-        Intent i = new Intent(UnLockeEzUnLockeEzSplashActivity.this, UnLockeEzMainPageActivity.class);
-        startActivity(i);// invoke the SecondActivity.
-        finish();// the current activity will get finished.
-    }*/
+    @Override
+    public void onAdLoaded(MaxAd maxAd) {
+
+    }
+
+    @Override
+    public void onAdDisplayed(MaxAd maxAd) {
+
+    }
+
+    @Override
+    public void onAdHidden(MaxAd maxAd) {
+        gotoHome();
+    }
+
+    @Override
+    public void onAdClicked(MaxAd maxAd) {
+
+    }
+
+    @Override
+    public void onAdLoadFailed(String s, MaxError maxError) {
+        tryAdAttempt++;
+        long delayMillis = TimeUnit.SECONDS.toMillis((long) Math.pow(2, Math.min(6, tryAdAttempt)));
+        new Handler().postDelayed(() -> interstitialAd.loadAd(), delayMillis);
+
+    }
+
+    @Override
+    public void onAdDisplayFailed(MaxAd maxAd, MaxError maxError) {
+        interstitialAd.loadAd();
+    }
+
+    @Override
+    public void onAdRevenuePaid(MaxAd maxAd) {
+
+    }
 }
