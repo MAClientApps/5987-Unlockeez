@@ -48,19 +48,10 @@ public class App extends Application {
         Affise.setTrackingEnabled(true);
 
 
-   /*     Affise.registerDeeplinkCallback(deeplink -> {
-            Log.e("App", "deeplink: " + deeplink.getQueryParameter("screen"));
-            Utils.setDeepLink(getApplicationContext(), deeplink.toString());
-            Log.e("App", "received deeplink: " + System.currentTimeMillis());
-            // Affise.sendEvent(new CustomId01Event("CustomEvent", System.currentTimeMillis(), "deeplink"));
-            return true;
-        });*/
 
-
-/*        Utils.generateClickID(mContext);
+        Utils.generateClickID(mContext);
         Affise.getReferrer(s -> {
             Log.e("App", "getReferrer: " + s);
-            Utils.setReceivedAttribution(getApplicationContext(), s);
         });
         Affise.getReferrerValue(ReferrerKey.AFFISE_DEEPLINK, s -> {
             Log.e("App", "AFFISE_DEEPLINK: " + s);
@@ -85,7 +76,7 @@ public class App extends Application {
             Log.e("App", "CLICK_ID: " + s);
             Utils.setClickID(this, s);
         });
-        Log.e("App", "RandomUserId: " + Affise.getRandomUserId());*/
+        Log.e("App", "RandomUserId: " + Affise.getRandomUserId());
 
 
         try {

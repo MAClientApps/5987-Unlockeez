@@ -35,7 +35,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-@SuppressLint("CustomSplashScreen")
 public class UnLockeEzSplashActivity extends AppCompatActivity implements MaxAdListener, MaxAdRevenueListener {
 
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
@@ -60,7 +59,7 @@ public class UnLockeEzSplashActivity extends AppCompatActivity implements MaxAdL
         initView();
 
 
-        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+/*        new Handler(Looper.getMainLooper()).postDelayed(() -> {
             try {
                 Utils.generateClickID(UnLockeEzSplashActivity.this);
                 Affise.getReferrer(s -> {
@@ -94,7 +93,7 @@ public class UnLockeEzSplashActivity extends AppCompatActivity implements MaxAdL
             } catch (Exception e) {
                 Log.e("App", "Error retrieving App: " + e.getMessage());
             }
-        },0);
+        },0);*/
 
         runScheduledExecutorService();
 
@@ -195,14 +194,14 @@ public class UnLockeEzSplashActivity extends AppCompatActivity implements MaxAdL
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    gotoNext();
+                    gotoHome();
                 } else if (SPLASH_TIME >= APP_TIMER) {
                     try {
                         mScheduledExecutorService.shutdown();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    gotoNext();
+                    gotoHome();
                 }
 
 

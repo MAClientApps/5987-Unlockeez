@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.affise:module-status:1.6.5@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/15b5fb92cc7ee5c26b887119573bf948/transformed/jetified-module-status-1.6.5/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/15b5fb92cc7ee5c26b887119573bf948/transformed/jetified-module-status-1.6.5/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.affise/module-status/1.6.5/fe363de10575d4a3c5b5ffd1da264f7185cf2617/module-status-1.6.5-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.affise/module-status/1.6.5/52b1ef24fc115b4ac06d7b5b8642ba75cbe10ca2/module-status-1.6.5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

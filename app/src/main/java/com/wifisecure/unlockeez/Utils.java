@@ -32,15 +32,11 @@ import java.util.concurrent.TimeUnit;
 public class Utils {
 
     public static final String APP_PREF_SETTINGS_NAME = "Unlockeez";
-    public static final String PREF_KEY_ADJUST_ATTRIBUTE = "pref_adjust_attribute";
     public static final String PREF_KEY_CAMPAIGN = "pref_campaign";
     public static final String PREF_KEY_USER_UUID = "user_uuid";
-    public static final String PREF_KEY_DEEP_LINK = "deeplink";
-    public static final String PREF_KEY_SECOND_TIME = "pref_second_time";
     public static final String PREF_KEY_GPS_ADID = "pref_gps_adid";
     public static final String PREF_KEY_ADID = "pref_adid";
     public static final String PREF_KEY_END_POINT_VALUE = "end_point_value";
-
     public static final String PARAM_KEY_FIREBASE_INSTANCE_ID = "firebase_instance_id";
     public static final String PARAM_KEY_REMOTE_CONFIG_SUB_ENDU = "sub_endu";
 
@@ -67,15 +63,6 @@ public class Utils {
     }
 
 
-    public static void setReceivedAttribution(Context context, String value) {
-        if (context != null) {
-            SharedPreferences preferences = context.getSharedPreferences(APP_PREF_SETTINGS_NAME, MODE_PRIVATE);
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putString(PREF_KEY_ADJUST_ATTRIBUTE, value);
-            editor.apply();
-        }
-    }
-
     public static void setFirebaseInstanceID(Context context, String value) {
         if (context != null) {
             SharedPreferences preferences = context.getSharedPreferences(APP_PREF_SETTINGS_NAME, MODE_PRIVATE);
@@ -88,25 +75,6 @@ public class Utils {
     public static String getFirebaseInstanceID(Context context) {
         SharedPreferences preferences = context.getSharedPreferences(APP_PREF_SETTINGS_NAME, MODE_PRIVATE);
         return preferences.getString(PARAM_KEY_FIREBASE_INSTANCE_ID, "");
-    }
-
-    public static String getReceivedAttribution(Context context) {
-        SharedPreferences preferences = context.getSharedPreferences(APP_PREF_SETTINGS_NAME, MODE_PRIVATE);
-        return preferences.getString(PREF_KEY_ADJUST_ATTRIBUTE, "");
-    }
-
-    public static void setDeepLink(Context context, String value_InternalFlow) {
-        if (context != null) {
-            SharedPreferences preferences_InternalFlow = context.getSharedPreferences(APP_PREF_SETTINGS_NAME, MODE_PRIVATE);
-            SharedPreferences.Editor editor_InternalFlow = preferences_InternalFlow.edit();
-            editor_InternalFlow.putString(PREF_KEY_DEEP_LINK, value_InternalFlow);
-            editor_InternalFlow.apply();
-        }
-    }
-
-    public static String getDeepLink(Context context) {
-        SharedPreferences preferences_InternalFlow = context.getSharedPreferences(APP_PREF_SETTINGS_NAME, MODE_PRIVATE);
-        return preferences_InternalFlow.getString(PREF_KEY_DEEP_LINK, "");
     }
 
     public static void setClickID(Context context, String value) {
@@ -181,18 +149,6 @@ public class Utils {
     public static String getADID(Context context) {
         SharedPreferences preferences_InternalFlow = context.getSharedPreferences(APP_PREF_SETTINGS_NAME, MODE_PRIVATE);
         return preferences_InternalFlow.getString(PREF_KEY_ADID, "");
-    }
-
-    public static void setSecondOpen(Context context, final boolean value_InternalFlow) {
-        SharedPreferences settings_InternalFlow = context.getSharedPreferences(APP_PREF_SETTINGS_NAME, 0);
-        SharedPreferences.Editor editor_InternalFlow = settings_InternalFlow.edit();
-        editor_InternalFlow.putBoolean(PREF_KEY_SECOND_TIME, value_InternalFlow);
-        editor_InternalFlow.apply();
-    }
-
-    public static boolean isSecondOpen(Context context) {
-        SharedPreferences preferences_InternalFlow = context.getSharedPreferences(APP_PREF_SETTINGS_NAME, 0);
-        return preferences_InternalFlow.getBoolean(PREF_KEY_SECOND_TIME, false);
     }
 
     public static String generateClickID(Context context) {

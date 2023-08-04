@@ -48,12 +48,12 @@ dependencies {
     implementation 'com.applovin:applovin-sdk:+'
     implementation 'com.applovin.mediation:unityads-adapter:+'
 
-    implementation 'com.affise:attribution:1.6.4'
+    implementation 'com.affise:attribution:1.6.5'
     // Add Affise modules
-    implementation 'com.affise:module-advertising:1.6.4'
-    implementation 'com.affise:module-network:1.6.4'
-    implementation 'com.affise:module-phone:1.6.4'
-    implementation 'com.affise:module-status:1.6.4'
+    implementation 'com.affise:module-advertising:1.6.5'
+    implementation 'com.affise:module-network:1.6.5'
+    implementation 'com.affise:module-phone:1.6.5'
+    implementation 'com.affise:module-status:1.6.5'
     // Add install referrer
     implementation 'com.android.installreferrer:installreferrer:2.2'
     implementation 'com.google.android.gms:play-services-analytics-impl:18.0.3'
