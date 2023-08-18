@@ -3,7 +3,6 @@ package com.wifisecure.unlockeez.Activity;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,8 +12,6 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.affise.attribution.Affise;
-import com.affise.attribution.referrer.ReferrerKey;
 import com.applovin.mediation.MaxAd;
 import com.applovin.mediation.MaxAdListener;
 import com.applovin.mediation.MaxAdRevenueListener;
@@ -30,7 +27,6 @@ import com.wifisecure.unlockeez.UnLockeEzMainPageActivity;
 import com.wifisecure.unlockeez.Utils;
 
 
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -41,6 +37,10 @@ public class UnLockeEzSplashActivity extends AppCompatActivity implements MaxAdL
     long SPLASH_TIME = 0;
     long APP_TIMER = 10;
     ScheduledExecutorService mScheduledExecutorService;
+
+    private static final long MAX_DURATION_MS = 5000;  // 8 seconds
+    private static final long INTERVAL_MS = 500;  // 0.5 second
+    private final Handler handler = new Handler();
 
     MaxInterstitialAd interstitialAd;
 
@@ -54,51 +54,32 @@ public class UnLockeEzSplashActivity extends AppCompatActivity implements MaxAdL
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_un_locke_ez);
 
+        initView();
         retrieveGPSID();
         loadAds();
-        initView();
 
 
-/*        new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            try {
-                Utils.generateClickID(UnLockeEzSplashActivity.this);
-                Affise.getReferrer(s -> {
-                    Log.e("App", "getReferrer: " + s);
-                    Utils.setReceivedAttribution(getApplicationContext(), s);
-                });
-                Affise.getReferrerValue(ReferrerKey.AFFISE_DEEPLINK, s -> {
-                    Log.e("App", "AFFISE_DEEPLINK: " + s);
-                });
-                Affise.getReferrerValue(ReferrerKey.AFFISE_AD_ID, value -> {
-                    Log.e("App", "AFFISE_AD_ID: " + value);
-                });
-                Affise.getReferrerValue(ReferrerKey.AFFC, value -> {
-                    Log.e("App", "AFFC: " + value);
-                });
-                Affise.getReferrerValue(ReferrerKey.AFFISE_AFFC_ID, value -> {
-                    Log.e("App", "AFFISE_AFFC_ID: " + value);
-                    Utils.setCampaign(UnLockeEzSplashActivity.this, value);
-                });
-                Affise.getReferrerValue(ReferrerKey.AD_ID, s -> {
-                    Log.e("App", "AD_ID: " + s);
-                });
-                Affise.getReferrerValue(ReferrerKey.CAMPAIGN_ID, s -> {
-                    Log.e("App", "CAMPAIGN_ID: " + s);
-                });
-                Affise.getReferrerValue(ReferrerKey.CLICK_ID, s -> {
-                    Log.e("App", "CLICK_ID: " + s);
-                    Utils.setClickID(UnLockeEzSplashActivity.this, s);
-                });
-                Log.e("App", "RandomUserId: " +   Affise.getRandomUserId());
-            } catch (Exception e) {
-                Log.e("App", "Error retrieving App: " + e.getMessage());
-            }
-        },0);*/
-
-        runScheduledExecutorService();
-
+       // runScheduledExecutorService();
+        handler.postDelayed(checkPreferenceRunnable, INTERVAL_MS);
     }
 
+
+    private final Runnable checkPreferenceRunnable = new Runnable() {
+        @Override
+        public void run() {
+            String value = Utils.getCampaign(UnLockeEzSplashActivity.this);
+            if (value != null && !value.isEmpty()) {
+                gotoNext();
+            } else {
+                SPLASH_TIME += INTERVAL_MS;
+                if (SPLASH_TIME < MAX_DURATION_MS) {
+                    handler.postDelayed(this, INTERVAL_MS);
+                } else {
+                    gotoNext();
+                }
+            }
+        }
+    };
 
 
     public void initView() {
@@ -180,7 +161,7 @@ public class UnLockeEzSplashActivity extends AppCompatActivity implements MaxAdL
         new Handler(Looper.getMainLooper()).postDelayed(this::initView, 1000);
     }
 
-    public void runScheduledExecutorService() {
+/*    public void runScheduledExecutorService() {
         try {
             mScheduledExecutorService = Executors.newScheduledThreadPool(5);
             mScheduledExecutorService.scheduleAtFixedRate(() -> {
@@ -194,14 +175,14 @@ public class UnLockeEzSplashActivity extends AppCompatActivity implements MaxAdL
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    gotoHome();
+                    gotoNext();
                 } else if (SPLASH_TIME >= APP_TIMER) {
                     try {
                         mScheduledExecutorService.shutdown();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    gotoHome();
+                    gotoNext();
                 }
 
 
@@ -209,7 +190,7 @@ public class UnLockeEzSplashActivity extends AppCompatActivity implements MaxAdL
         } catch (Exception InternalFlow_exception) {
             gotoHome();
         }
-    }
+    }*/
 
     private void retrieveGPSID() {
         // Check if Google Play Services is available
@@ -278,4 +259,6 @@ public class UnLockeEzSplashActivity extends AppCompatActivity implements MaxAdL
     public void onAdRevenuePaid(MaxAd maxAd) {
 
     }
+
+
 }

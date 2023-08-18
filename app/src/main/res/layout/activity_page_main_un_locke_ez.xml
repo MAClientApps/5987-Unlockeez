@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
+
     <com.wifisecure.unlockeez.widget.UnLockeEzNavigationDrawer
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/unLockeEzNavigationDrawerId"
-        >
+        android:layout_width="match_parent"
+        android:layout_above="@+id/bannerAds"
+        android:layout_height="match_parent">
+
         <FrameLayout
             android:id="@+id/frameLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
     </com.wifisecure.unlockeez.widget.UnLockeEzNavigationDrawer>
+
+    <RelativeLayout
+        android:id="@+id/bannerAds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_alignParentBottom="true"/>
 </RelativeLayout>

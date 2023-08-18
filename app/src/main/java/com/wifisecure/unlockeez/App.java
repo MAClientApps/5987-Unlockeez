@@ -48,14 +48,11 @@ public class App extends Application {
         Affise.setTrackingEnabled(true);
 
 
-
         Utils.generateClickID(mContext);
         Affise.getReferrer(s -> {
             Log.e("App", "getReferrer: " + s);
         });
-        Affise.getReferrerValue(ReferrerKey.AFFISE_DEEPLINK, s -> {
-            Log.e("App", "AFFISE_DEEPLINK: " + s);
-        });
+
         Affise.getReferrerValue(ReferrerKey.AFFISE_AD_ID, value -> {
             Log.e("App", "AFFISE_AD_ID: " + value);
         });
@@ -72,11 +69,12 @@ public class App extends Application {
         Affise.getReferrerValue(ReferrerKey.CAMPAIGN_ID, s -> {
             Log.e("App", "CAMPAIGN_ID: " + s);
         });
-        Affise.getReferrerValue(ReferrerKey.CLICK_ID, s -> {
-            Log.e("App", "CLICK_ID: " + s);
-            Utils.setClickID(this, s);
-        });
+
         Log.e("App", "RandomUserId: " + Affise.getRandomUserId());
+
+        Log.e("App", "RandomDeviceId: " + Affise.getRandomDeviceId());
+
+        Utils.setClickID(mContext, Affise.getRandomUserId());
 
 
         try {

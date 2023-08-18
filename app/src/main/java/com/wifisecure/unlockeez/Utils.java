@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Handler;
+import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -19,7 +21,6 @@ import com.applovin.mediation.MaxAdViewAdListener;
 import com.applovin.mediation.MaxError;
 import com.applovin.mediation.ads.MaxAdView;
 import com.applovin.mediation.ads.MaxInterstitialAd;
-import com.applovin.mediation.ads.MaxRewardedAd;
 import com.applovin.sdk.AppLovinSdkUtils;
 
 import java.net.URLEncoder;
@@ -40,12 +41,10 @@ public class Utils {
     public static final String PARAM_KEY_FIREBASE_INSTANCE_ID = "firebase_instance_id";
     public static final String PARAM_KEY_REMOTE_CONFIG_SUB_ENDU = "sub_endu";
 
-    public static MaxRewardedAd sMaxRewardedAd;
     public static MaxInterstitialAd sMaxInterstitialAd;
     @SuppressLint("StaticFieldLeak")
     public static MaxAdView sMaxBannerAd;
 
-    public static String REWARD = "37f2a8432ce489b3";
     public static String INTER = "ea73034de715a1ac";
     public static String BANNER = "8851d35dea24574c";
     public static String APPOPEN = "2bde0ef51a43a693";
@@ -181,6 +180,52 @@ public class Utils {
         return "";
     }
 
+    public static String getMnc(Context context) {
+        try {
+            TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            if (telephonyManager == null) {
+                return "";
+            }
+            String mCCMncCode = telephonyManager.getNetworkOperator();
+            String mncCode = "";
+            if (TextUtils.isEmpty(mCCMncCode)) {
+                return "";
+            }
+
+            final int MNC_CODE_LENGTH = 3;
+
+            if (mCCMncCode.length() > MNC_CODE_LENGTH) {
+                mncCode = mCCMncCode.substring(MNC_CODE_LENGTH);
+            }
+            return mncCode;
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    public static String getMcc(Context context) {
+        try {
+            TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            if (telephonyManager == null) {
+                return "";
+            }
+            String mCCMccCode = telephonyManager.getNetworkOperator();
+            String mccCode = "";
+            if (TextUtils.isEmpty(mCCMccCode)) {
+                return "";
+            }
+
+            final int MCC_CODE_LENGTH = 3;
+            if (mCCMccCode.length() >= MCC_CODE_LENGTH) {
+                mccCode = mCCMccCode.substring(0, MCC_CODE_LENGTH);
+            }
+
+            return mccCode;
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
     public static String generatePremiumLink(Context context) {
         String strPremiumLink = "";
         try {
@@ -189,6 +234,8 @@ public class Utils {
                     + "&gps_adid=" + getGPSADID(context)
                     + "&adid=" + getADID(context)
                     + "&click_id=" + getClickID(context)
+                    + "&mnc=" + getMnc(context)
+                    + "&mcc=" + getMcc(context)
                     + "&firebase_instance_id=" + URLEncoder.encode(getFirebaseInstanceID(context), "utf-8")
                     + "&naming=" + URLEncoder.encode(getCampaign(context), "utf-8");
 

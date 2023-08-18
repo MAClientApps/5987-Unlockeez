@@ -2,6 +2,7 @@ package com.wifisecure.unlockeez;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -18,21 +19,31 @@ public class UnLockeEzMainPageActivity extends AppCompatActivity {
     Class showFragmentClass;
     public static Fragment showFragment;
 
+    private AppOpenManager appOpenManager;
+    private RelativeLayout bannerAds;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_page_main_un_locke_ez);
-        if(getSupportActionBar()!=null) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
+        appOpenManager = new AppOpenManager(this);
+
         unLockeEzNavigationDrawer = findViewById(R.id.unLockeEzNavigationDrawerId);
+        bannerAds = findViewById(R.id.bannerAds);
+
+        Utils.loadMaxInterstitialAd(UnLockeEzMainPageActivity.this);
+        Utils.showBannerAds(bannerAds, UnLockeEzMainPageActivity.this);
+
         List<UnLockeEzMenuItem> menuItems = new ArrayList<>();
-        menuItems.add(new UnLockeEzMenuItem("Available Wifi",R.drawable.available_wifi));
-        menuItems.add(new UnLockeEzMenuItem("Show Password",R.drawable.showpass_bg));
-        menuItems.add(new UnLockeEzMenuItem("Map",R.drawable.map_bg));
+        menuItems.add(new UnLockeEzMenuItem("Available Wifi", R.drawable.available_wifi));
+        menuItems.add(new UnLockeEzMenuItem("Show Password", R.drawable.showpass_bg));
+        menuItems.add(new UnLockeEzMenuItem("Map", R.drawable.map_bg));
         unLockeEzNavigationDrawer.setMenuItemList(menuItems);
-        showFragmentClass =  UnLockeEzAvailableWifiOnThisPageFragment.class;
+        showFragmentClass = UnLockeEzAvailableWifiOnThisPageFragment.class;
         try {
             showFragment = (Fragment) showFragmentClass.newInstance();
         } catch (Exception e) {
@@ -43,17 +54,20 @@ public class UnLockeEzMainPageActivity extends AppCompatActivity {
             fragmentManager.beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out).replace(R.id.frameLayout, showFragment).commit();
         }
         unLockeEzNavigationDrawer.setOnMenuItemClickListener(position -> {
-            System.out.println("Position "+position);
-            switch (position){
-                case 0:{
+            System.out.println("Position " + position);
+            switch (position) {
+                case 0: {
+                    Utils.showInterstitialAd();
                     showFragmentClass = UnLockeEzAvailableWifiOnThisPageFragment.class;
                     break;
                 }
-                case 1:{
+                case 1: {
+                    Utils.showInterstitialAd();
                     showFragmentClass = UnLockeEzWifiPassWordOnThisPageFragment.class;
                     break;
                 }
-                case 2:{
+                case 2: {
+                    Utils.showInterstitialAd();
                     showFragmentClass = UnLockeEzMapWifiOnThisPageFragment.class;
                     break;
                 }
@@ -62,11 +76,13 @@ public class UnLockeEzMainPageActivity extends AppCompatActivity {
                 @Override
                 public void onDrawerOpened() {
                 }
+
                 @Override
-                public void onDrawerOpening(){
+                public void onDrawerOpening() {
                 }
+
                 @Override
-                public void onDrawerClosing(){
+                public void onDrawerClosing() {
                     try {
                         showFragment = (Fragment) showFragmentClass.newInstance();
                     } catch (Exception e) {
@@ -77,13 +93,20 @@ public class UnLockeEzMainPageActivity extends AppCompatActivity {
                         unLockeEzShowFragmentManager.beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out).replace(R.id.frameLayout, showFragment).commit();
                     }
                 }
+
                 @Override
                 public void onDrawerClosed() {
                 }
+
                 @Override
                 public void onDrawerStateChanged(int newState) {
                 }
             });
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 }
