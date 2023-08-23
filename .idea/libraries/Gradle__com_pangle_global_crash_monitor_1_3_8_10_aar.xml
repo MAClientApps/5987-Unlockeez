@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: com.pangle.global:crash_monitor:1.3.8.10@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/15c8cb29bfba08784f1b08f95e6918dd/transformed/jetified-crash_monitor-1.3.8.10/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/15c8cb29bfba08784f1b08f95e6918dd/transformed/jetified-crash_monitor-1.3.8.10/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

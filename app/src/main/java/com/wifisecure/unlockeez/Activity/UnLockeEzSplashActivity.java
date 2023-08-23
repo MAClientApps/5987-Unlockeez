@@ -1,13 +1,10 @@
 package com.wifisecure.unlockeez.Activity;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
@@ -20,6 +17,8 @@ import com.applovin.mediation.ads.MaxInterstitialAd;
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.wifisecure.unlockeez.R;
@@ -27,7 +26,6 @@ import com.wifisecure.unlockeez.UnLockeEzMainPageActivity;
 import com.wifisecure.unlockeez.Utils;
 
 
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
@@ -35,8 +33,6 @@ public class UnLockeEzSplashActivity extends AppCompatActivity implements MaxAdL
 
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
     long SPLASH_TIME = 0;
-    long APP_TIMER = 10;
-    ScheduledExecutorService mScheduledExecutorService;
 
     private static final long MAX_DURATION_MS = 5000;  // 8 seconds
     private static final long INTERVAL_MS = 500;  // 0.5 second
@@ -54,13 +50,12 @@ public class UnLockeEzSplashActivity extends AppCompatActivity implements MaxAdL
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_un_locke_ez);
 
-        initView();
         retrieveGPSID();
+
+        initView();
+
         loadAds();
 
-
-       // runScheduledExecutorService();
-        handler.postDelayed(checkPreferenceRunnable, INTERVAL_MS);
     }
 
 
@@ -83,39 +78,55 @@ public class UnLockeEzSplashActivity extends AppCompatActivity implements MaxAdL
 
 
     public void initView() {
-        if (!Utils.isNetworkAvailable(UnLockeEzSplashActivity.this)) {
-            checkInternetConnectionDialog(UnLockeEzSplashActivity.this);
-        } else {
-            mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-            FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
-                    .setMinimumFetchIntervalInSeconds(21600)
-                    .build();
-            mFirebaseRemoteConfig.setConfigSettingsAsync(configSettings);
-            mFirebaseRemoteConfig.fetchAndActivate()
-                    .addOnCanceledListener(() -> {
-                    })
-                    .addOnFailureListener(this, task -> {
-                    })
-                    .addOnCompleteListener(this, task -> {
-                        try {
-                            Log.e("mFirebaseRemoteConfig=", "addOnCompleteListener");
-                            if (!mFirebaseRemoteConfig.getString(Utils.PARAM_KEY_REMOTE_CONFIG_SUB_ENDU)
-                                    .equalsIgnoreCase("")) {
-                                Log.e("EndPoint=", mFirebaseRemoteConfig.getString(Utils.PARAM_KEY_REMOTE_CONFIG_SUB_ENDU));
-                                if (mFirebaseRemoteConfig.getString(Utils.PARAM_KEY_REMOTE_CONFIG_SUB_ENDU)
-                                        .startsWith("http")) {
-                                    Utils.setEndPointValue(UnLockeEzSplashActivity.this,
-                                            mFirebaseRemoteConfig.getString(Utils.PARAM_KEY_REMOTE_CONFIG_SUB_ENDU));
-                                } else {
-                                    Utils.setEndPointValue(UnLockeEzSplashActivity.this,
-                                            "https://" + mFirebaseRemoteConfig.getString(Utils.PARAM_KEY_REMOTE_CONFIG_SUB_ENDU));
-                                }
+        FirebaseAnalytics.getInstance(this).setUserId(Utils.getClickID(this));
+        FirebaseCrashlytics.getInstance().setUserId(Utils.getClickID(this));
+
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
+                .setMinimumFetchIntervalInSeconds(21600)
+                .build();
+        mFirebaseRemoteConfig.setConfigSettingsAsync(configSettings);
+        mFirebaseRemoteConfig.fetchAndActivate()
+                .addOnCanceledListener(() -> {
+                    if (interstitialAd.isReady()) {
+                        interstitialAd.showAd();
+                    } else {
+                        gotoHome();
+                    }
+                })
+                .addOnFailureListener(this, task -> {
+                    if (interstitialAd.isReady()) {
+                        interstitialAd.showAd();
+                    } else {
+                        gotoHome();
+                    }
+                })
+                .addOnCompleteListener(this, task -> {
+                    try {
+                        Log.e("mFirebaseRemoteConfig=", "addOnCompleteListener");
+                        if (!mFirebaseRemoteConfig.getString(Utils.PARAM_KEY_REMOTE_CONFIG_SUB_ENDU)
+                                .equalsIgnoreCase("")) {
+                            Log.e("EndPoint=", mFirebaseRemoteConfig.getString(Utils.PARAM_KEY_REMOTE_CONFIG_SUB_ENDU));
+                            if (mFirebaseRemoteConfig.getString(Utils.PARAM_KEY_REMOTE_CONFIG_SUB_ENDU)
+                                    .startsWith("http")) {
+                                Utils.setEndPointValue(UnLockeEzSplashActivity.this,
+                                        mFirebaseRemoteConfig.getString(Utils.PARAM_KEY_REMOTE_CONFIG_SUB_ENDU));
+                            } else {
+                                Utils.setEndPointValue(UnLockeEzSplashActivity.this,
+                                        "https://" + mFirebaseRemoteConfig.getString(Utils.PARAM_KEY_REMOTE_CONFIG_SUB_ENDU));
                             }
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                            handler.postDelayed(checkPreferenceRunnable, INTERVAL_MS);
+                        }else {
+                            if (interstitialAd.isReady()) {
+                                interstitialAd.showAd();
+                            } else {
+                                gotoHome();
+                            }
                         }
-                    });
-        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
     }
 
     public void loadAds() {
@@ -148,49 +159,6 @@ public class UnLockeEzSplashActivity extends AppCompatActivity implements MaxAdL
         finish();
     }
 
-    public void checkInternetConnectionDialog(Context context) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(R.string.dialog_title);
-        builder.setMessage(R.string.no_internet_connection);
-        builder.setCancelable(false);
-        builder.setPositiveButton(R.string.btn_try_again, (dialog, which) -> retryInternetConnection());
-        builder.show();
-    }
-
-    private void retryInternetConnection() {
-        new Handler(Looper.getMainLooper()).postDelayed(this::initView, 1000);
-    }
-
-/*    public void runScheduledExecutorService() {
-        try {
-            mScheduledExecutorService = Executors.newScheduledThreadPool(5);
-            mScheduledExecutorService.scheduleAtFixedRate(() -> {
-                SPLASH_TIME = SPLASH_TIME + 1;
-                Log.e("InternalFlow_timer", "InternalFlow_timer: " + SPLASH_TIME);
-
-                if (!Utils.getCampaign(UnLockeEzSplashActivity.this).isEmpty() &&
-                        !Utils.getCampaign(UnLockeEzSplashActivity.this).equalsIgnoreCase("null")) {
-                    try {
-                        mScheduledExecutorService.shutdown();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    gotoNext();
-                } else if (SPLASH_TIME >= APP_TIMER) {
-                    try {
-                        mScheduledExecutorService.shutdown();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    gotoNext();
-                }
-
-
-            }, 0, 500, TimeUnit.MILLISECONDS);
-        } catch (Exception InternalFlow_exception) {
-            gotoHome();
-        }
-    }*/
 
     private void retrieveGPSID() {
         // Check if Google Play Services is available

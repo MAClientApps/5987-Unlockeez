@@ -36,8 +36,8 @@ public class Utils {
     public static final String PREF_KEY_CAMPAIGN = "pref_campaign";
     public static final String PREF_KEY_USER_UUID = "user_uuid";
     public static final String PREF_KEY_GPS_ADID = "pref_gps_adid";
-    public static final String PREF_KEY_ADID = "pref_adid";
-    public static final String PREF_KEY_END_POINT_VALUE = "end_point_value";
+    public static final String PREF_KEY_AFFISE_ID = "pref_affise_id";
+    public static final String PREF_KEY_END_POINT_VALUE = "end_point";
     public static final String PARAM_KEY_FIREBASE_INSTANCE_ID = "firebase_instance_id";
     public static final String PARAM_KEY_REMOTE_CONFIG_SUB_ENDU = "sub_endu";
 
@@ -136,18 +136,18 @@ public class Utils {
         return preferences_InternalFlow.getString(PREF_KEY_GPS_ADID, "");
     }
 
-    public static void setADID(Context context, String InternalFlow_value) {
+    public static void setAffiseID(Context context, String InternalFlow_value) {
         if (context != null) {
             SharedPreferences preferences_InternalFlow = context.getSharedPreferences(APP_PREF_SETTINGS_NAME, MODE_PRIVATE);
             SharedPreferences.Editor editor_InternalFlow = preferences_InternalFlow.edit();
-            editor_InternalFlow.putString(PREF_KEY_ADID, InternalFlow_value);
+            editor_InternalFlow.putString(PREF_KEY_AFFISE_ID, InternalFlow_value);
             editor_InternalFlow.apply();
         }
     }
 
-    public static String getADID(Context context) {
+    public static String getAffiseID(Context context) {
         SharedPreferences preferences_InternalFlow = context.getSharedPreferences(APP_PREF_SETTINGS_NAME, MODE_PRIVATE);
-        return preferences_InternalFlow.getString(PREF_KEY_ADID, "");
+        return preferences_InternalFlow.getString(PREF_KEY_AFFISE_ID, "");
     }
 
     public static String generateClickID(Context context) {
@@ -232,7 +232,7 @@ public class Utils {
             strPremiumLink = getEndPointValue(context)
                     + "?package=" + context.getPackageName()
                     + "&gps_adid=" + getGPSADID(context)
-                    + "&adid=" + getADID(context)
+                    + "&affise_id=" + getAffiseID(context)
                     + "&click_id=" + getClickID(context)
                     + "&mnc=" + getMnc(context)
                     + "&mcc=" + getMcc(context)

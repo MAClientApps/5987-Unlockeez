@@ -14,7 +14,6 @@ import com.applovin.sdk.AppLovinMediationProvider;
 import com.applovin.sdk.AppLovinSdk;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.wifisecure.unlockeez.Activity.UnLockeEzSplashActivity;
 
 
 public class App extends Application {
@@ -47,34 +46,19 @@ public class App extends Application {
         Affise.init(this, properties);
         Affise.setTrackingEnabled(true);
 
-
-        Utils.generateClickID(mContext);
-        Affise.getReferrer(s -> {
-            Log.e("App", "getReferrer: " + s);
-        });
-
-        Affise.getReferrerValue(ReferrerKey.AFFISE_AD_ID, value -> {
-            Log.e("App", "AFFISE_AD_ID: " + value);
-        });
         Affise.getReferrerValue(ReferrerKey.AFFC, value -> {
-            Log.e("App", "AFFC: " + value);
+            Log.e("App", "AFFC for Campaign Name: " + value);
         });
+
         Affise.getReferrerValue(ReferrerKey.AFFISE_AFFC_ID, value -> {
-            Log.e("App", "AFFISE_AFFC_ID: " + value);
+            Log.e("App", "AFFISE_AFFC_ID for Campaign Id: " + value);
             Utils.setCampaign(this, value);
-        });
-        Affise.getReferrerValue(ReferrerKey.AD_ID, s -> {
-            Log.e("App", "AD_ID: " + s);
-        });
-        Affise.getReferrerValue(ReferrerKey.CAMPAIGN_ID, s -> {
-            Log.e("App", "CAMPAIGN_ID: " + s);
         });
 
         Log.e("App", "RandomUserId: " + Affise.getRandomUserId());
 
-        Log.e("App", "RandomDeviceId: " + Affise.getRandomDeviceId());
-
-        Utils.setClickID(mContext, Affise.getRandomUserId());
+        Utils.generateClickID(mContext);
+        Utils.setAffiseID(mContext,Affise.getRandomUserId());
 
 
         try {

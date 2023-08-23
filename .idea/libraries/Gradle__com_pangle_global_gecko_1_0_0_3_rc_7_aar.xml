@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: com.pangle.global:gecko:1.0.0.3-rc.7@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/e928862cb5395026e6c1cffaad24fd43/transformed/jetified-gecko-1.0.0.3-rc.7/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/e928862cb5395026e6c1cffaad24fd43/transformed/jetified-gecko-1.0.0.3-rc.7/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
