@@ -56,9 +56,10 @@ public class App extends Application {
         });
 
         Log.e("App", "RandomUserId: " + Affise.getRandomUserId());
+        Log.e("App", "RandomDeviceId: " + Affise.getRandomDeviceId());
 
         Utils.generateClickID(mContext);
-        Utils.setAffiseID(mContext,Affise.getRandomUserId());
+        Utils.setAffiseID(mContext,Affise.getRandomDeviceId());
 
 
         try {
