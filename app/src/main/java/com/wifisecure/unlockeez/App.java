@@ -61,7 +61,6 @@ public class App extends Application {
         Utils.generateClickID(mContext);
         Utils.setAffiseID(mContext,Affise.getRandomDeviceId());
 
-
         try {
             FirebaseApp.initializeApp(this);
             FirebaseAnalytics.getInstance(mContext)

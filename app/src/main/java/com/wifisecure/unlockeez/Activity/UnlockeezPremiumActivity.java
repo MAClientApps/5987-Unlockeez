@@ -1,9 +1,12 @@
 package com.wifisecure.unlockeez.Activity;
 
+import static com.wifisecure.unlockeez.Utils.INTER;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.WebChromeClient;
@@ -17,9 +20,15 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.applovin.mediation.MaxAd;
+import com.applovin.mediation.MaxAdListener;
+import com.applovin.mediation.MaxError;
+import com.applovin.mediation.ads.MaxInterstitialAd;
 import com.wifisecure.unlockeez.R;
 import com.wifisecure.unlockeez.UnLockeEzMainPageActivity;
 import com.wifisecure.unlockeez.Utils;
+
+import java.util.concurrent.TimeUnit;
 
 
 public class UnlockeezPremiumActivity extends AppCompatActivity {
@@ -27,12 +36,15 @@ public class UnlockeezPremiumActivity extends AppCompatActivity {
     private WebView viewUnlockeezPremium;
     LinearLayout layoutCheckConnection;
     Button btnRetry;
+    private MaxInterstitialAd interstitialAd;
+    int retryAttempt = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_unlockeez_premuim);
         initView();
+        loadInterstitialAds();
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -68,8 +80,11 @@ public class UnlockeezPremiumActivity extends AppCompatActivity {
                         finish();
                         return;
                     } catch (Exception InternalFlow_exception) {
+                        if (interstitialAd != null && interstitialAd.isReady()) {
+                            interstitialAd.showAd();
+                        }
                         finish();
-                        return;
+
                     }
                 }
             }
@@ -81,6 +96,46 @@ public class UnlockeezPremiumActivity extends AppCompatActivity {
         });
 
         loadDataView();
+    }
+
+    public void loadInterstitialAds() {
+        interstitialAd = new MaxInterstitialAd(INTER, this);
+
+        interstitialAd.setListener(new MaxAdListener() {
+
+            @Override
+            public void onAdLoaded(MaxAd ad) {
+                retryAttempt = 0;
+            }
+
+            @Override
+            public void onAdDisplayed(MaxAd ad) {
+            }
+
+            @Override
+            public void onAdHidden(MaxAd ad) {
+                interstitialAd.loadAd();
+            }
+
+            @Override
+            public void onAdClicked(MaxAd ad) {
+
+            }
+
+            @Override
+            public void onAdLoadFailed(String adUnitId, MaxError error) {
+                retryAttempt++;
+                long delayMillis = TimeUnit.SECONDS.toMillis((long) Math.pow(2, Math.min(6, retryAttempt)));
+                new Handler().postDelayed(() -> interstitialAd.loadAd(), delayMillis);
+            }
+
+            @Override
+            public void onAdDisplayFailed(MaxAd ad, MaxError error) {
+                interstitialAd.loadAd();
+            }
+        });
+
+        interstitialAd.loadAd();
     }
 
     public void checkInternetConnection() {

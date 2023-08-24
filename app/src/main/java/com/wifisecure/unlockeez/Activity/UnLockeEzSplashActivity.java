@@ -151,14 +151,12 @@ public class UnLockeEzSplashActivity extends AppCompatActivity implements MaxAdL
                 gotoHome();
             }
         }
-
     }
 
     public void gotoHome() {
         startActivity(new Intent(UnLockeEzSplashActivity.this, UnLockeEzMainPageActivity.class));
         finish();
     }
-
 
     private void retrieveGPSID() {
         // Check if Google Play Services is available
