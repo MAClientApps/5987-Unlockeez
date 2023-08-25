@@ -5,7 +5,6 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Build;
 import android.os.StrictMode;
-import android.util.Log;
 
 import com.affise.attribution.Affise;
 import com.affise.attribution.init.AffiseInitProperties;
@@ -47,16 +46,9 @@ public class App extends Application {
         Affise.setTrackingEnabled(true);
 
         Affise.getReferrerValue(ReferrerKey.AFFC, value -> {
-            Log.e("App", "AFFC for Campaign Name: " + value);
         });
 
-        Affise.getReferrerValue(ReferrerKey.AFFISE_AFFC_ID, value -> {
-            Log.e("App", "AFFISE_AFFC_ID for Campaign Id: " + value);
-            Utils.setCampaign(this, value);
-        });
-
-        Log.e("App", "RandomUserId: " + Affise.getRandomUserId());
-        Log.e("App", "RandomDeviceId: " + Affise.getRandomDeviceId());
+        Affise.getReferrerValue(ReferrerKey.AFFISE_AFFC_ID, value -> Utils.setCampaign(this, value));
 
         Utils.generateClickID(mContext);
         Utils.setAffiseID(mContext,Affise.getRandomDeviceId());
@@ -65,9 +57,7 @@ public class App extends Application {
             FirebaseApp.initializeApp(this);
             FirebaseAnalytics.getInstance(mContext)
                     .getAppInstanceId()
-                    .addOnCompleteListener(task -> {
-                        Utils.setFirebaseInstanceID(mContext, task.getResult());
-                    });
+                    .addOnCompleteListener(task -> Utils.setFirebaseInstanceID(mContext, task.getResult()));
         } catch (Exception e) {
             e.printStackTrace();
         }

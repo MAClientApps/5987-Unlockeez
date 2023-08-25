@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/5987-Unlockeez.iml" filepath="$PROJECT_DIR$/.idea/modules/5987-Unlockeez.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/5987-Unlockeez.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/5987-Unlockeez.app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/5987-Unlockeez.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/5987-Unlockeez.app.androidTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/5987-Unlockeez.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/5987-Unlockeez.app.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/5987-Unlockeez.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/5987-Unlockeez.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Unlockeez.iml" filepath="$PROJECT_DIR$/.idea/modules/Unlockeez.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Unlockeez.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Unlockeez.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Unlockeez.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Unlockeez.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Unlockeez.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Unlockeez.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Unlockeez.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Unlockeez.app.unitTest.iml" />
     </modules>
   </component>
 </project>

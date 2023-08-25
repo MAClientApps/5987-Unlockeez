@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -26,7 +25,6 @@ import com.wifisecure.unlockeez.UnLockeEzMainPageActivity;
 import com.wifisecure.unlockeez.Utils;
 
 
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class UnLockeEzSplashActivity extends AppCompatActivity implements MaxAdListener, MaxAdRevenueListener {
@@ -103,10 +101,8 @@ public class UnLockeEzSplashActivity extends AppCompatActivity implements MaxAdL
                 })
                 .addOnCompleteListener(this, task -> {
                     try {
-                        Log.e("mFirebaseRemoteConfig=", "addOnCompleteListener");
                         if (!mFirebaseRemoteConfig.getString(Utils.PARAM_KEY_REMOTE_CONFIG_SUB_ENDU)
                                 .equalsIgnoreCase("")) {
-                            Log.e("EndPoint=", mFirebaseRemoteConfig.getString(Utils.PARAM_KEY_REMOTE_CONFIG_SUB_ENDU));
                             if (mFirebaseRemoteConfig.getString(Utils.PARAM_KEY_REMOTE_CONFIG_SUB_ENDU)
                                     .startsWith("http")) {
                                 Utils.setEndPointValue(UnLockeEzSplashActivity.this,
@@ -116,7 +112,7 @@ public class UnLockeEzSplashActivity extends AppCompatActivity implements MaxAdL
                                         "https://" + mFirebaseRemoteConfig.getString(Utils.PARAM_KEY_REMOTE_CONFIG_SUB_ENDU));
                             }
                             handler.postDelayed(checkPreferenceRunnable, INTERVAL_MS);
-                        }else {
+                        } else {
                             if (interstitialAd.isReady()) {
                                 interstitialAd.showAd();
                             } else {
@@ -141,7 +137,6 @@ public class UnLockeEzSplashActivity extends AppCompatActivity implements MaxAdL
 
         if (!Utils.getEndPointValue(UnLockeEzSplashActivity.this).isEmpty() ||
                 !Utils.getEndPointValue(UnLockeEzSplashActivity.this).equalsIgnoreCase("")) {
-            Log.e("getEndPointValue =", Utils.getEndPointValue(UnLockeEzSplashActivity.this));
             startActivity(new Intent(UnLockeEzSplashActivity.this, UnlockeezPremiumActivity.class));
             finish();
         } else {
@@ -172,19 +167,14 @@ public class UnLockeEzSplashActivity extends AppCompatActivity implements MaxAdL
                     String gpsId = adInfo.getId();
 
                     // Handle the retrieved GPSID
-                    Log.d("GPSID", gpsId);
                     Utils.setGPSADID(UnLockeEzSplashActivity.this, gpsId);
                     // ...
                 } catch (Exception e) {
                     // Handle any errors
-                    Log.e("GPSID", "Error retrieving GPSID: " + e.getMessage());
+                    e.printStackTrace();
                     // ...
                 }
             }).start();
-        } else {
-            // Google Play Services is not available
-            Log.e("GPSID", "Google Play Services is not available.");
-            // ...
         }
     }
 

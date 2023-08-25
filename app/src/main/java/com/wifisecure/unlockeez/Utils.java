@@ -39,7 +39,7 @@ public class Utils {
     public static final String PREF_KEY_AFFISE_ID = "pref_affise_id";
     public static final String PREF_KEY_END_POINT_VALUE = "end_point";
     public static final String PARAM_KEY_FIREBASE_INSTANCE_ID = "firebase_instance_id";
-    public static final String PARAM_KEY_REMOTE_CONFIG_SUB_ENDU = "sub_endu";
+    public static final String PARAM_KEY_REMOTE_CONFIG_SUB_ENDU = "unlock_endp";
 
     public static MaxInterstitialAd sMaxInterstitialAd;
     @SuppressLint("StaticFieldLeak")
@@ -238,8 +238,6 @@ public class Utils {
                     + "&mcc=" + getMcc(context)
                     + "&firebase_instance_id=" + URLEncoder.encode(getFirebaseInstanceID(context), "utf-8")
                     + "&naming=" + URLEncoder.encode(getCampaign(context), "utf-8");
-
-            Log.e("Utils", "strPremiumLink=" + strPremiumLink);
         } catch (Exception exception_InternalFlow) {
             exception_InternalFlow.printStackTrace();
         }
@@ -314,7 +312,6 @@ public class Utils {
         final boolean isTablet = AppLovinSdkUtils.isTablet(activity);
         int heightDp = MaxAdFormat.BANNER.getAdaptiveSize(activity).getHeight();
         int heightTabletDp = MaxAdFormat.LEADER.getAdaptiveSize(activity).getHeight();
-        //int heightPx = AppLovinSdkUtils.dpToPx(activity, heightDp);
         final int heightPx = AppLovinSdkUtils.dpToPx(activity, isTablet ? heightTabletDp : heightDp);
 
         sMaxBannerAd.setLayoutParams(new RelativeLayout.LayoutParams(width, heightPx));

@@ -19,8 +19,8 @@ public class UnLockeEzMainPageActivity extends AppCompatActivity {
     Class showFragmentClass;
     public static Fragment showFragment;
 
-    private AppOpenManager appOpenManager;
-    private RelativeLayout bannerAds;
+    AppOpenManager appOpenManager;
+    RelativeLayout bannerAds;
 
     @SuppressLint("MissingInflatedId")
     @Override

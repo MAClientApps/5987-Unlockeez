@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: com.affise:module-advertising:1.6.8@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/47469195e653519862685c7871be96d5/transformed/jetified-module-advertising-1.6.8/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/47469195e653519862685c7871be96d5/transformed/jetified-module-advertising-1.6.8/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/242c2a37eb1e470317761683226df6ca/transformed/jetified-module-advertising-1.6.8/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/242c2a37eb1e470317761683226df6ca/transformed/jetified-module-advertising-1.6.8/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.affise/module-advertising/1.6.8/c88f4886a5b215b0079669069c82fbe8eeb4e76f/module-advertising-1.6.8-javadoc.jar!/" />
